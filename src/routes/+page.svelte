@@ -62,8 +62,8 @@
 		<h1 class=" text-5xl font-bold">🚂 SORRY 🛤️</h1>
 		{#if currentRemark !== undefined}
 			<div class="flex flex-col gap-4">
-				<div class="card bg-neutral text-neutral-content shadow-xl md:max-w-xl">
-					<div class="card-body"><p>{@html currentRemark.text}</p></div>
+				<div class="card max-w-sm bg-neutral text-neutral-content shadow-xl md:max-w-xl">
+					<div class="card-body"><p class="break-words">{@html currentRemark.text}</p></div>
 				</div>
 			</div>
 			<button class="btn btn-primary" onclick={() => newRemark()}>{currentReaction}</button>
