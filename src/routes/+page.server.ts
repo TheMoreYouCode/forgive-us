@@ -8,16 +8,27 @@ const userAgent = 'forgive-us';
 // create a client with the Deutsche Bahn profile
 const client = createClient(dbProfile, userAgent);
 
-const now = new Date();
+async function fetchRemarks() {
+	console.log('fetching remarks', now);
+	return (
+		await client.remarks?.({
+			from: now,
+			to: now,
+			language: 'de'
+		})
+	)?.remarks as Warning[];
+}
+
+let now = new Date();
+let remarks = await fetchRemarks();
 
 export const load: PageServerLoad = async () => {
-	return {
-		remarks: (
-			await client.remarks?.({
-				from: now,
-				to: now,
-				language: 'de'
-			})
-		)?.remarks as Warning[]
-	};
+	// fetch new remarks if the last fetch was more than 1 minute ago
+	const newNow = new Date();
+	if (newNow.getTime() - now.getTime() > 60 * 1000) {
+		now = newNow;
+		remarks = await fetchRemarks();
+	}
+
+	return { remarks };
 };
