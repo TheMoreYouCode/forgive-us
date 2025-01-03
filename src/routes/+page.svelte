@@ -14,7 +14,7 @@
 	<div class="flex flex-col gap-4">
 		{#each data.remarks as remark}
 			<div
-				class="block max-w-sm rounded-lg border border-gray-200 bg-white p-6 shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
+				class="block max-w-sm rounded-lg border border-gray-200 bg-white p-6 shadow hover:bg-gray-100 md:max-w-xl dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
 			>
 				<p class="break-words font-normal text-gray-700 dark:text-gray-400">{@html remark.text}</p>
 			</div>
