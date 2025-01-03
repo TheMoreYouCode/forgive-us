@@ -1,23 +1,61 @@
 <script lang="ts">
 	import type { PageData } from './$types';
+	import { onMount } from 'svelte';
 
 	export let data: PageData;
+
+	function getRandomReaction() {
+		return reactions[Math.floor(Math.random() * reactions.length)];
+	}
+
+	function getRandomRemark() {
+		const index = Math.floor(Math.random() * data.remarks.length);
+		const remark = data.remarks[index];
+
+		data.remarks = data.remarks.filter((r) => r.id !== remark.id);
+
+		return remark;
+	}
+
+	let reactions = [
+		'Na toll!',
+		'Oh nein!',
+		'Kruzifix!',
+		'Dann bleib ich wohl zuhause',
+		'Da haben wir den Salat!',
+		'Ich geh wieder ins Bett.',
+		'Als ob!',
+		'Wär ja zu schön gewesen!'
+	];
+
+	let currentReaction: string;
+	let currentRemark: (typeof data.remarks)[0];
+
+	onMount(() => {
+		currentReaction = getRandomReaction();
+		currentRemark = getRandomRemark();
+	});
+
+	function newRemark() {
+		if (data.remarks.length === 0) {
+			currentRemark = { type: 'warning', text: 'Keine weitern Ausreden vorhanden.' };
+			return;
+		}
+
+		currentRemark = getRandomRemark();
+		currentReaction = getRandomReaction();
+	}
 </script>
 
-<div class="container mx-auto flex flex-col items-center justify-center px-4 py-8">
-	<h1
-		class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white"
-	>
-		DB Remarks
-	</h1>
+<div class="hero">
+	<div class="hero-content flex flex-col text-center">
+		<h1 class=" text-5xl font-bold">🚂 SORRY 🛤️</h1>
 
-	<div class="flex flex-col gap-4">
-		{#each data.remarks as remark}
-			<div
-				class="block max-w-sm rounded-lg border border-gray-200 bg-white p-6 shadow hover:bg-gray-100 md:max-w-xl dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
-			>
-				<p class="break-words font-normal text-gray-700 dark:text-gray-400">{@html remark.text}</p>
+		<div class="flex flex-col gap-4">
+			<div class="card bg-neutral text-neutral-content shadow-xl md:max-w-xl">
+				<div class="card-body"><p>{@html currentRemark?.text}</p></div>
 			</div>
-		{/each}
+		</div>
+		<button class="btn btn-primary" onclick={() => newRemark()}>{currentReaction}</button>
 	</div>
 </div>
