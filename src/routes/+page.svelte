@@ -5,7 +5,9 @@
 	export let data: PageData;
 
 	function getRandomReaction() {
-		return reactions[Math.floor(Math.random() * reactions.length)];
+		const newReaction = reactions[Math.floor(Math.random() * reactions.length)];
+		if (newReaction === currentReaction) return getRandomReaction();
+		return newReaction;
 	}
 
 	function getRandomRemark() {
@@ -25,7 +27,15 @@
 		'Da haben wir den Salat!',
 		'Ich geh wieder ins Bett.',
 		'Als ob!',
-		'Wär ja zu schön gewesen!'
+		'Wär ja zu schön gewesen!',
+		'Gar kein Bock mehr!',
+		'Traurig, traurig!',
+		'Na super!',
+		'Das ist ja blöd!',
+		'Nicht schon wieder!',
+		'So ein Mist!',
+		'Das darf doch nicht wahr sein!',
+		'Was für ein Pech!'
 	];
 
 	let currentReaction: string;
