@@ -1,8 +1,7 @@
 FROM node:22
 WORKDIR /app 
-COPY package.json /app 
-COPY yarn.lock /app
-RUN yarn install 
-COPY . /app 
-CMD yarn dev --host 
-EXPOSE 5173
+COPY . /app
+RUN yarn install
+RUN yarn build
+CMD yarn preview --host
+EXPOSE 4173
