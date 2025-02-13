@@ -1,5 +1,6 @@
 services:
   forgive-us:
     build: .
+    restart: always
     ports:
       - 4173:4173
